@@ -15,6 +15,7 @@ interface Props{
 interface State{
   size: number
 }
+// @ts-ignore
 @connect(
   state=>state,
   { getlist, clearlist }

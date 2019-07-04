@@ -16,6 +16,7 @@ interface Props{
 }
 interface State{
 }
+// @ts-ignore
 @connect(
   state => (state as any).artical,
   { getdetail, cleardetail }

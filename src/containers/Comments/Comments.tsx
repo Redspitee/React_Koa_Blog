@@ -25,6 +25,7 @@ interface State{
   time: number,
   size: number
 }
+// @ts-ignore
 @connect(
   state=>state,
   {login,getInfo,logOut, getlist}

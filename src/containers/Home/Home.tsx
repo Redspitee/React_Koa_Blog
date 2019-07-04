@@ -15,6 +15,7 @@ interface Props{
   clearlist: Function,
   setscrolltop: Function
 }
+// @ts-ignore
 @connect(
   state=>state,
   { getlist, clearlist, setscrolltop }
