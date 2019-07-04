@@ -1,0 +1,164 @@
+@DeepColor: #948C76;
+@hoverColor: #e7d9ba;
+@BrightColor: #F7F3EE;
+
+.List{
+  margin: 4em 0;
+}
+.Artical-box {
+  padding-left: 15%;
+  margin-top: 3em;
+
+  .artical {
+    width: 100%;
+    position: relative;
+    min-height: .3rem;
+  }
+
+  .dotts {
+    left: 1.2%;
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.143em solid @BrightColor;
+    position: absolute;
+    top: 0;
+    line-height: 0;
+    border-radius: 50%;
+    background: #fff;
+    margin-left: -0.6em;
+    z-index: 10;
+  }
+
+  .date {
+    display: block;
+    position: absolute;
+    top: -0.5em;
+    margin-left: 3.5em;
+    height: 2.14em;
+    color: @DeepColor;
+    z-index: 10;
+    transition: 0.3s;
+
+    &:hover {
+      margin-left: 2.8em;
+
+      .trig {
+        border-right: 1.2em solid @hoverColor;
+      }
+
+      .dates {
+        background: @hoverColor;
+      }
+    }
+  }
+
+  .trig {
+    position: absolute;
+    left: -1.14em;
+    top: 0;
+    border-right: 16px solid #f7f3ee;
+    border-top: 15px dashed transparent;
+    border-bottom: 15px dashed transparent;
+    width: 0;
+    height: 0;
+    line-height: 0;
+  }
+
+  .dates {
+    display: inline-block;
+    padding: 0 1em 0 1em;
+    height: 30px;
+    background: @BrightColor;
+    font-size: .8em;
+    vertical-align: top;
+    line-height: 2.5em;
+  }
+
+  .art-container {
+    width: 100%;
+    padding: 0 0 0 1%;
+    position: relative;
+
+    .line {
+      width: 0.143em;
+      height: 100%;
+      background: @BrightColor;
+      position: absolute;
+      z-index: 0;
+      transition: 0.5s;
+    }
+
+    .art-content {
+      padding: 0 1em 1em 2em;
+      overflow: hidden;
+
+    }
+    .art-title {
+      margin: 3em 0 2em;
+      font-size: 1em;
+
+      a {
+        color: #444;
+      }
+    }
+
+    .art-img {
+      width: 30%;
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+
+    .art-detail {
+      width: 85%;
+      line-height: 1.5em;
+      margin-top: 2em;
+      font-size: .8em;
+      p {
+        text-align: justify;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        height: 4.5em;
+        overflow: hidden;
+      }
+
+    }
+  }
+}
+
+@media screen and(max-width:450px) {
+  .Artical-box {
+    padding-left: 5%;
+
+    .art-container {
+      .art-title{
+        font-size: 1em;
+      }
+      .art-content {
+        padding-left: 1.5em;
+
+        .art-detail {
+          font-size: .8em;
+
+        }
+      }
+      .art-img {
+        width: 60%;
+  
+        img {
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+
+  }
+}

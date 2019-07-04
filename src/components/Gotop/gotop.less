@@ -1,0 +1,43 @@
+@Width : 3em;
+.Gotop{
+  width: @Width;
+  height: @Width;
+  background: #cccccc;
+  border-radius: 5px;
+  position: fixed;
+  cursor: pointer;
+  text-align: center;
+  line-height: @Width;
+  transition: all .3s;
+  z-index: 1000;
+  opacity: 0;
+  display: none;
+  right: 10%;
+  bottom: 10%;
+  &:active{
+    opacity: 1;
+    background: #666;
+  }
+  &.active{
+    display: block;
+    animation: fadeTo .7s forwards;
+  }
+  
+  img{
+    vertical-align: middle;
+  }
+}
+@keyframes fadeTo{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 0.6;
+
+  }
+}
+@media screen and(max-width:1024px){
+  .Gotop{
+    right: 1em;
+  }
+}

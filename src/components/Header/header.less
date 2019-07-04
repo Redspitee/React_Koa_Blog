@@ -1,0 +1,53 @@
+
+@DeepColor: #948C76;
+@BrightColor: #F7F3EE;
+.Header {
+  width: 100%;
+  text-align: center;
+  .header-box{
+    animation: fadein .3s;
+    img {
+      width: 40vw;
+      height: 40vw;
+      max-width: 120px;
+      max-height: 120px;
+      border-radius: 50%;
+    }
+  }
+
+  .my-id {
+    font-size: 1.3em;
+    font-weight: 400;
+    padding: 0 .5em;
+    letter-spacing: .1em;
+    line-height: 2em;
+    margin: 2em 0;
+    display: inline-block;
+    color: @DeepColor;
+    background: @BrightColor;
+  }
+
+  .my-sort{
+    margin-bottom: 2em;
+    // font-size: .9em;
+    a {
+      display: inline-block;
+      margin: 0 1em;
+      font-size: .8em;
+      &.active{
+        text-decoration: underline;
+      }
+    }
+  }
+}
+// 动画
+@keyframes fadein{
+  from{
+    opacity: 0;
+    transform: translateY(-5em);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0)
+  }
+}

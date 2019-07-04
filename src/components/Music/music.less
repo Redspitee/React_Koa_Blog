@@ -1,0 +1,45 @@
+// MUSIC组件css
+@musicWidth : 3em;
+@marginRight: 5%;
+
+.musicPic {
+  z-index: 100;
+  cursor: pointer;
+  position: fixed;
+  width: @musicWidth;
+  height: @musicWidth;
+  bottom: 10%;
+  animation: rotate linear 3s infinite;
+  animation-play-state: paused;
+  transition: all .3s;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+@media screen and(max-width:1024px){
+  .musicPic{
+    right: 10%;
+    bottom: 20%;
+  }
+}
+@media screen and(min-width:1024px){
+  .musicPic{
+    left: 10%;
+  }
+}
+
+// 动画
+.rotate {
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0)
+  }
+
+  to {
+    transform: rotate(360deg)
+  }
+}

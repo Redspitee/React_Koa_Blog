@@ -1,0 +1,52 @@
+@DeepColor: #948C76;
+@BrightColor: #F7F3EE;
+h1{
+  color: #111;
+  text-align: center;
+  margin-bottom: 2em;
+  font-size: 16px;
+  font-weight: normal;
+}
+html{
+  font-size: 100px;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-size: 0.14rem;
+  margin: 0.5rem auto 0;
+  padding: 0;
+  color:#787978;
+  font-family: "Microsoft Yahei";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 800px;
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: url('./bg.jpg') repeat;
+}
+button,a,input{
+  outline: none;
+  border: none;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+a{
+  text-decoration: none;
+  color: @DeepColor;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+@media screen and(max-width:1024px){
+  .Gotop{
+    right: 1em;
+  }
+}
+

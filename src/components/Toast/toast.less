@@ -1,0 +1,26 @@
+.Toast{
+  width: 100vw;
+  height:100vh;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0);
+  &.hide{
+    display: none;
+  }
+  .toast-content{
+    min-width: 150px;
+    min-height: auto;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    color: #948C76;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: rgb(247, 243, 238);
+    border: 1px solid rgba(189, 175, 160, 0.61);
+  }
+}
