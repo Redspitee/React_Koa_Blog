@@ -99,7 +99,7 @@ class Cv extends PureComponent{
               </div>
               <div className="box bg-gray-lightest">
                 <p className="m-t-0"><b>项目从0到1</b></p>
-                <p>混合式开发APP、微信小程序开发、后台管理系统</p>
+                <p>混合式开发APP、微信小程序开发、后台管理系统开发</p>
               </div>
             </div>
 
