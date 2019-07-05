@@ -6,5 +6,6 @@ git push origin master
 rm -rf ../server_blog/*
 cp -ri server/* ../server_blog
 cd ../server_blog
-git pull origin pc
-git push origin pc
+git checkout master
+git pull origin master
+git push origin master
