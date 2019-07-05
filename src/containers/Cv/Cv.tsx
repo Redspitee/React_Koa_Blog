@@ -21,7 +21,7 @@ class Cv extends PureComponent{
                 <div className="row">
                   <div className="col-4 p-t-10 p-b-10">● 手机：18030842838</div>
                   <div className="col-4 p-t-10 p-b-10 border">● Email：718352984@qq.com</div>
-                  <div className="col-4 p-t-10 p-b-10 border">● 网站：https://www.redspite.com</div>
+                  <div className="col-4 p-t-10 p-b-10 border">● 网站：www.redspite.com</div>
                 </div>
               </div>
             </div>
