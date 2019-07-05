@@ -42,6 +42,7 @@
 
 ## 技术栈
 - [x] react
+- [x] redux
 - [x] react-redux
 - [x] react-router
 - [x] redux-thunk
