@@ -2,7 +2,7 @@ import React,{ PureComponent } from 'react';
 import { Modal, Input, message, Popconfirm, Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import CommentList from './CommentList/CommentList';
-import { sendComment, validate_user } from '../../api/api';
+import { sendComment, validate_user, login_api } from '../../api/api';
 import './bjq.less';
 // 异步自定义校验
 
@@ -20,12 +20,11 @@ interface Props  extends FormComponentProps {
 interface State{
   input: any,
   visible: boolean,
+  extra: string,
   user: any,
   email: any,
   weburl: any,
-  replyId: string,
-  replyEmail: string
-  
+  replyId: string
 }
 class BjqApp extends PureComponent<Props,State>{
   constructor(props: Props){
@@ -33,11 +32,11 @@ class BjqApp extends PureComponent<Props,State>{
     this.state={
       input: '',
       visible: false,
+      extra: '',
       user:'',
       email: '',
       weburl:'',
-      replyId:'',
-      replyEmail: ''
+      replyId:''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -58,10 +57,19 @@ class BjqApp extends PureComponent<Props,State>{
     })
   }
   handleOk(){
-    this.props.form.validateFields(['user', 'email', 'weburl'], {force: true}, (errors, values) => {
+    this.props.form.validateFields(['user', 'email', 'weburl'], {force: true}, async(errors, values) => {
       if (!errors) {
-        const {user, email, weburl} = values;
-        this.props.login({user,email,weburl: weburl || ""}) 
+        const { user, email, weburl } = values;
+        const info = await login_api({ user, email, weburl });
+        console.log(weburl)
+        const { code, msg = '登陆失败', data } = info;
+        console.log(data)
+        if(code !== 0){
+          message.error(msg);
+          return;
+        }  
+
+        this.props.login(data) 
         this.handleCancel()
       }
       console.log(errors, values)
@@ -82,12 +90,12 @@ class BjqApp extends PureComponent<Props,State>{
       message.error('多说一点');
       return
     }
-    const {replyId, replyEmail} = this.state;
-    const issuccess = await sendComment({content:this.state.input,replyId,replyEmail});
+    const {replyId} = this.state;
+    const issuccess = await sendComment({content:this.state.input,replyId});
     if(!issuccess){ message.error('发表留言失败'); return};
     
     message.success('留言发表成功');
-    this.setState({input:'',replyId: '',replyEmail: ''});
+    this.setState({input:'',replyId: ''});
     this.props.getComments()
   }
   getInput(e: any , type: any){
@@ -103,8 +111,7 @@ class BjqApp extends PureComponent<Props,State>{
   getFocus(v:any){
     this.setState({
       input: `@${v.user_name}: `,
-      replyId: v._id,
-      replyEmail: v.user_email
+      replyId: v._id
     })
     const area =  this.refs["textarea"] as any;
     area.focus()
@@ -117,7 +124,7 @@ class BjqApp extends PureComponent<Props,State>{
  
   render(){
     const { user,_id } = this.props.userinfo;
-    const { visible } = this.state;
+    const { visible, extra } = this.state;
     const { TextArea } = Input;
     const { list, getMore, size, count, delComment } = this.props;
     const { getFieldDecorator  } = this.props.form;
@@ -129,7 +136,7 @@ class BjqApp extends PureComponent<Props,State>{
         <div className="Bjq"> 
           <div className="editor_div">
             <div className="editor_toolbar">
-              {user?notlogin:logined}
+              {user ? notlogin: logined }
             </div>
             <div className="editor_textarea">
               <TextArea onChange={this.handleChange} value={this.state.input} ref="textarea"></TextArea>
@@ -144,7 +151,7 @@ class BjqApp extends PureComponent<Props,State>{
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           >
-            <Form.Item hasFeedback  required >
+            <Form.Item hasFeedback required extra={ extra }>
              {getFieldDecorator('user', {
                 validateTrigger: ['onBlur'],
                 rules: [
@@ -152,13 +159,21 @@ class BjqApp extends PureComponent<Props,State>{
                     type: "string",
                     required: true,
                     whitespace: true,
-                    message: '请输入昵称'
+                    message: '请输入昵称',
                   },
                   {
                     validator: async (rule, value, callback) => {
                       const ispass = await validate_user({user: value})
-                      !ispass ? callback(new Error('昵称已经被占用啦')) : callback();
-                     }
+                      !ispass ? this.setState({
+                          extra: '昵称已存在，请验证邮箱号登陆'
+                        })
+                      :
+                      this.setState({
+                        extra: ''
+                      });
+
+                      callback();
+                    }
                   }, {
                     min: 1,
                     max: 16,
@@ -177,13 +192,14 @@ class BjqApp extends PureComponent<Props,State>{
                     min: 1,
                     message: '邮箱格式不对',
                     type: 'email'
-                  },
+                  }
                 ],
               })(<Input addonBefore="邮箱(必填)" placeholder="xx@xx.xx" />)}
               
             </Form.Item>
             <Form.Item hasFeedback>
               {getFieldDecorator('weburl', {
+                initialValue: '',
                 rules: [
                   {
                     required: false,

@@ -20,7 +20,7 @@ const nowSchema = new Schema({
 		default:[]
 	},
 	createtime:{
-    type: String,
+    type: Date,
 		required: true
 	},
 	isDel: {
@@ -77,7 +77,7 @@ class Mongodb {
 					if (err) {
 						reject(err)
 					};
-					!res.length ? resolve(0) : resolve(res.length)
+					res && res.length ? resolve(res.length) : resolve(0);
 				})
 			})
 		}
@@ -96,7 +96,7 @@ class Mongodb {
 	// 补充信息
 	updata(_id,data){
 		return new Promise((resolve, reject) => {
-			MyModel.findByIdAndUpdate(_id,data, {new:true,fields:_filter}, async (err,res)=>{
+			MyModel.findByIdAndUpdate(_id,data, { new: true, fields: _filter }, async (err,res)=>{
 				if (err) {
 					reject(err)
 				}

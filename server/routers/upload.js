@@ -9,7 +9,6 @@ const storage = multer.diskStorage({
   destination: dirpath,
   // 文件名
   filename(req, file, cb){
-    console.log(serverip)
     const filename = file.originalname.split(".")
     cb(null, `${Date.now()}.${filename[filename.length - 1]}`)
   }

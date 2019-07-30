@@ -114,7 +114,6 @@ router
     mail,
     password: getMd5Str(password)
   })
-  console.log(data)
   if (data) {
     ctx.cookies.set('userid', data[0]['_id'])
     ctx.body = {

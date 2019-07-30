@@ -7,7 +7,7 @@ const childSchema = new Schema({
 		required: true
 	},
 	createtime:{
-		type: String,
+		type: Date,
 		required: true,
 	},
 	ip:{
@@ -18,8 +18,12 @@ const childSchema = new Schema({
 		type: Boolean,
 		required: true
 	},
+	city: {
+		type: String,
+		required: true
+	},
 	userinfo:{
-		type:Object,
+		type: Object,
 		required: true
 	}
 })
@@ -41,7 +45,7 @@ const nowSchema = new Schema({
 		required: true
 	},
 	createtime: {
-		type: String,
+		type: Date,
 		required: true
 	},
 	children:[childSchema],
@@ -59,39 +63,45 @@ const _filter = {
 	'isDel': 0,
 	'children.isDel': 0
 };
-
+const initKeys = {
+	page: 0, 
+	size: 15, 
+	sorter: 'createtime_descend' 
+}
 // const  _filter = 'pwd __v'
 class Mongodb {
 	constructor() {}
 	// 查询
 	countAll(obj) {
 		return new Promise((resolve, reject) => {
-			MyModel.find({...obj},_filter)
+			MyModel.find({ ...obj }, _filter)
 			.exec((err, res) => {
 				if (err) {
 					reject(err)
 				};
-				!res.length ? resolve(0) : resolve(res.length)
+				res && res.length ? resolve(res.length) : resolve(0);
 			})
 		})
 	}
 	// 查询
 	count(obj) {
 		return new Promise((resolve, reject) => {
-			MyModel.find({...obj,isDel: false},_filter)
+			MyModel.find({...obj, isDel: false}, _filter)
 			.exec((err, res) => {
 				if (err) {
 					reject(err)
 				};
-				!res.length ? resolve(0) : resolve(res.length)
+				res && res.length ? resolve(res.length) : resolve(0);
 			})
 		})
 	}
 	// 全部评论
-	queryAll(obj, { page, size }) {
-		if (!page) page = 0;
-		if (!size) size = 15;
+	queryAll(obj, keys) {
+		let { page = 0, size = 15, sorter = 'createtime_descend' } = keys ? keys : initKeys;
 		size = parseInt(size);
+		const sortKey = sorter.split('_')[0];
+		const sortVal = sorter.split('_')[1] === 'ascend' ? 1 : -1;
+
 		return new Promise((resolve, reject) => {
 			MyModel.aggregate([
 				{"$match": obj},
@@ -105,7 +115,7 @@ class Mongodb {
 				}
 			])
 			.sort({
-				createtime: -1
+				[sortKey]: sortVal
 			})
 			.skip(page * size)
 			.limit(size)
@@ -180,7 +190,7 @@ class Mongodb {
 			 data = MyModel.findOneAndUpdate({
 				  _id: fId,
 					children:{
-						$elemMatch:{_id: _id}
+						$elemMatch: { _id: _id }
 					}
 			 },{
 				 $set:{
@@ -198,6 +208,7 @@ class Mongodb {
 	}
 	// 补充信息
 	update(_id, data) {
+		console.log(data)
 		return new Promise((resolve, reject) => {
 			MyModel.findByIdAndUpdate(_id, {
 				'$push': {

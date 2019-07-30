@@ -16,7 +16,7 @@ const initState = {
 export function artical(state = initState, action) {
   switch(action.type) {
     case SAVELIST:
-      const { list: newlist, ...others} = action.payload;
+      const { list: newlist, ...others } = action.payload;
       const { list } = state;
       return {...state, list: list.concat(newlist || []), ...others};
     case CLEARLIST:

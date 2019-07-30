@@ -1,7 +1,7 @@
 import React,{ PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { message } from 'antd';
-import { login,getInfo,logOut } from '../../reducer/user.redux';
+import { login, getInfo, logOut } from '../../reducer/user.redux';
 import { getlist } from '../../reducer/comment.redux';
 import { delComments } from '../../api/api';
 
@@ -28,7 +28,7 @@ interface State{
 // @ts-ignore
 @connect(
   state=>state,
-  {login,getInfo,logOut, getlist}
+  {login, getInfo, logOut, getlist}
 )
 class Comments extends PureComponent<Props,State>{
   constructor(props: Props){
@@ -52,7 +52,7 @@ class Comments extends PureComponent<Props,State>{
  
   async delComment(fId: any, _id:any){
     const issuccess = await delComments(fId, _id);
-    if(!issuccess) { message.error('删除失败'); return};
+    if(!issuccess) { message.error('删除失败'); return };
     message.success('删除成功');
     const { size } = this.state;
     this.props.getlist({ page: 0, size })
@@ -64,7 +64,7 @@ class Comments extends PureComponent<Props,State>{
   async getMore(){
     const { size } = this.state;
     const { page } = (this.props as any).comment;
-    await (this.props as any).getlist({page: page + 1, size});
+    await (this.props as any).getlist({ page: page + 1, size });
   }
   showToast(msg: string, time: number){
     this.setState({
@@ -75,7 +75,7 @@ class Comments extends PureComponent<Props,State>{
       this.setState({
         msg: ""
       })
-    },time*1000)
+    }, time*1000)
   }
   render(){
     const { msg, size} = this.state;

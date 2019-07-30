@@ -6,18 +6,22 @@ const getMd5Str = require('../utils/getmd5')
 
 router
   .get('/api/user/list', async ctx => {
-    const list = await ModelDb.query();
+    let {page,size, sorter, ...obj} = ctx.query;
+    const list = await ModelDb.query(obj, { page, size, sorter });
+    const count = await ModelDb.count(obj);
     ctx.body = {
       list: list ? list : [],
-      code: 0
+      code: 0,
+      count
     }
   })
   .get('/api/user/info', async ctx=>{
     const _id = ctx.cookies.get('userid');
-    const user = await ModelDb.query({_id});
+    let user;
+    if(_id) user = await ModelDb.queryId({_id});
 
     _id && user ? ctx.body = {
-        data: user[0],
+        data: user,
         code: 0
       }
     :
@@ -26,9 +30,9 @@ router
     };
   })
   .post('/api/user/validate', async ctx => {
-    const {user} = ctx.request.body;
+    const { user } = ctx.request.body;
     const users = await ModelDb.query({user});
-    users && users.length>0 ? ctx.body = {
+    users && users[0] ? ctx.body = {
       code: 0,
       num: users.length
     }
@@ -38,27 +42,37 @@ router
     };
   })
   .post('/api/user/login', async ctx => {
-    const _id = ctx.cookies.get('userid');
-    if(_id){
-      const user = await ModelDb.query({_id});
+    const { user, email, weburl, ip, city } = ctx.request.body;
+    const users = await ModelDb.query({user});
+    const userInfo = await ModelDb.query({ user, email });
+    if(users[0] && userInfo[0]){
+      ctx.cookies.set('userid', userInfo[0]['_id'],{maxAge: 60*60*24*10000000})
       ctx.body = {
-        data: user[0],
+        data: userInfo[0],
         code: 0
       }
+      return
     }
-    const {user,email,weburl, ip, city} = ctx.request.body;
-    const createtime = moment().format();
-    const data = await ModelDb.save({user, email, weburl, createtime, ip, city});
-    ctx.cookies.set('userid', data['_id'],{maxAge: 60*60*24*10000000})
+    if(!users[0]){
+      const createtime = moment().format();
+      const data = await ModelDb.save({user, email, weburl, createtime, ip, city});
+      ctx.cookies.set('userid', data['_id'],{maxAge: 60*60*24*10000000})
+      ctx.body = {
+        data: data,
+        code: 0
+      }
+      return
+    }
     ctx.body = {
-      data: data,
-      code: 0
+      code: 1,
+      msg: '用户名与邮箱号不匹配'
     }
+
   })
   .post('/api/user/logout', async ctx => {
-    ctx.cookies.set('userid', '',{maxAge:0})
+    ctx.cookies.set('userid', '',{ maxAge: 0 })
     ctx.body = {
-      code:0
+      code: 0
     }
   })
   

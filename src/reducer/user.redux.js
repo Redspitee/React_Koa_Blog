@@ -1,4 +1,5 @@
-import { login_api, logout_api, getinfo } from '../api/api';
+import { logout_api, getinfo } from '../api/api';
+
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT";
 const SETINFO= "SETINFO";
@@ -22,9 +23,8 @@ export function userinfo(state = initState, action){
   }
 }
 // 登陆
-export function login({user,email,weburl}){
+export function login(info){
   return async dispatch =>{
-    const info = await login_api({user,email,weburl})
     dispatch(GoLogin(info))
   }
 }
@@ -40,11 +40,9 @@ export function logOut(){
 export function getInfo(){
   return async dispatch =>{
     const info = await getinfo();
-    info ?  dispatch({type: SETINFO,payload: info}) : dispatch({type:''});
+    info ? dispatch({type: SETINFO,payload: info}) : dispatch({type:''});
   }
 }
-
-
 function GoLogin(data){
   return {
     type: LOGIN,

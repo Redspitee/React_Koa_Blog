@@ -36,13 +36,13 @@ class CommentList extends PureComponent<Props,{}>{
     this.props.delComment(fId,_id)
   }
   render(){
-    const { list,count,userid } = this.props;
+    const { list, count, userid } = this.props;
     const none =  <Skeleton avatar title active />;
 
     const actions = (v:any, fId:any)=>{
-      let arr = [<span onClick={()=>this.replyTo(v, fId)}>回复</span>];
+      let arr = [<span onClick={() => this.replyTo(v, fId)}>回复</span>];
       let del = (
-      <Popconfirm title="是否要删除此条评论?" onConfirm={()=>this.delComment(fId,v._id)} okText="确定" cancelText="取消">
+      <Popconfirm title="是否要删除此条评论?" onConfirm={() => this.delComment(fId, v._id)} okText="确定" cancelText="取消">
         <span className="del">删除</span>
       </Popconfirm>)
       v.userinfo._id === userid ? arr.push(del) : null;

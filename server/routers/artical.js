@@ -1,7 +1,8 @@
 const Router = require('koa-router')
 const router = new Router()
 const moment = require('moment')
-const ModelDb = require('../db/artical')
+const ModelDb = require('../db/artical');
+
 router
   .get('/api/info', async ctx => {
     const req = ctx.req;
@@ -47,7 +48,7 @@ router
     }
   })
   .post('/api/artical/delete', async ctx => {
-    const {_id} = ctx.request.body;
+    const { _id } = ctx.request.body;
     const artical = await ModelDb.query({_id});
     let alias = artical[0];
     alias.isDel = true;
