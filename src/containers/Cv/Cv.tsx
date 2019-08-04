@@ -19,8 +19,8 @@ class Cv extends PureComponent{
             <div className="boxes default m-b-20">
               <div className="box bg-gray-lightest p-t-0 p-b-0">
                 <div className="row">
-                  <div className="col-4 p-t-10 p-b-10">● xxxxxxxxxxx</div>
-                  <div className="col-4 p-t-10 p-b-10 border">● Email：718352984@qq.com</div>
+                  {/* <div className="col-4 p-t-10 p-b-10">● xxxxxxxxxxx</div> */}
+                  {/* <div className="col-4 p-t-10 p-b-10 border">● Email：xxxxxxxxx@qq.com</div> */}
                   <div className="col-4 p-t-10 p-b-10 border">● 网站：www.redspite.com</div>
                 </div>
               </div>
