@@ -60,9 +60,9 @@ router
   })
   .post('/api/comment/delete', async ctx => {
     const _id = ctx.cookies.get('userid');
-    const { fId,id } = ctx.request.body;
+    const { fId, id } = ctx.request.body;
     if(_id && id){
-      await ModelDb.delete(fId,id)
+      await ModelDb.delete(fId, id)
       ctx.body = {
         code: 0
       }

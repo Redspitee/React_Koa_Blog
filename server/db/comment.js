@@ -104,15 +104,7 @@ class Mongodb {
 
 		return new Promise((resolve, reject) => {
 			MyModel.aggregate([
-				{"$match": obj},
-				{"$project":  {
-						"content": 1,
-						"createtime": 1,
-						"ip": 1,
-						"userinfo": 1,
-						"city": 1
-					}
-				}
+				{"$match": obj}
 			])
 			.sort({
 				[sortKey]: sortVal
@@ -180,10 +172,10 @@ class Mongodb {
 		})
 	}
 	// 删除
-	delete(fId,_id) {
+	delete(fId, _id) {
 		return new Promise((resolve, reject) => {
 			let data ;
-			fId == _id ? data = MyModel.findByIdAndUpdate(fId,{
+			fId == _id ? data = MyModel.findByIdAndUpdate(fId, {
 				isDel: true
 			})
 			:
