@@ -37,7 +37,6 @@ export function get_ip() {
     if (err) {
       console.error(err);
     } else {
-      console.log(data);
       return data
     }
   })

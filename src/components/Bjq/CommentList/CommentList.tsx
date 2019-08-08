@@ -80,7 +80,7 @@ class CommentList extends PureComponent<Props,{}>{
       {list.map((v: any,index: number)=>(
         <div key={v._id}>
           <div><small>{count-index}楼</small></div>
-          {comment(v,v.children,v._id)}
+          {comment(v, v.children, v._id)}
          <Divider />
         </div>
       ))}

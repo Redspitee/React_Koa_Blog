@@ -61,9 +61,7 @@ class BjqApp extends PureComponent<Props,State>{
       if (!errors) {
         const { user, email, weburl } = values;
         const info = await login_api({ user, email, weburl });
-        console.log(weburl)
         const { code, msg = '登陆失败', data } = info;
-        console.log(data)
         if(code !== 0){
           message.error(msg);
           return;
@@ -72,7 +70,6 @@ class BjqApp extends PureComponent<Props,State>{
         this.props.login(data) 
         this.handleCancel()
       }
-      console.log(errors, values)
     });
   }
   showLogin(){
