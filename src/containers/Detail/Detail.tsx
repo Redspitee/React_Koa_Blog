@@ -47,7 +47,7 @@ class Detail extends PureComponent<Props,State>{
     return (
       <div>
         <Header active={1} />
-        <Gotop style={{backgroundColor: "#ddd"}}/>
+        <Gotop />
         {detail.title ? 
         <div className="artical-detail">
           <h1>{detail.title}</h1>

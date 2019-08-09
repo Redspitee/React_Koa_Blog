@@ -39,7 +39,7 @@ class Home extends PureComponent<Props,State>{
     return (
       <div className="Home">
         <Header active={1} />
-        <Gotop style={{backgroundColor: "#ddd"}}/>
+        <Gotop />
         <List artical={artical} getlist={getlist} clearlist={clearlist} />
         <Bottom />
       </div>

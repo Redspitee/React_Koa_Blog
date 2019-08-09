@@ -103,11 +103,9 @@ export function list_artical({
   size
 }) {
   return new Promise((resolve, reject) => {
-    axios.get('/api/artical/list', {
-        params: {
+    axios.post('/api/artical/list', {
           page,
           size
-        }
       })
       .then(res => {
         const {
@@ -131,10 +129,8 @@ export function list_artical({
 // 文章详情
 export function getcontent_artical(_id) {
   return new Promise((resolve, reject) => {
-    axios.get('/api/artical/content', {
-        params: {
-          _id
-        }
+    axios.post('/api/artical/content', {
+        _id
       })
       .then(res => {
         res.data.code === 0 ? resolve(res.data.data) : resolve({})
@@ -147,11 +143,9 @@ export function getcontent_artical(_id) {
 // 验证cookie获取个人信息
 export function getinfo() {
   return new Promise((resolve, reject) => {
-    axios.get('/api/user/info', {
-        params: {
-          ip: window.userip,
-          city: window.usercity
-        }
+    axios.post('/api/user/info', {
+        ip: window.userip,
+        city: window.usercity
       })
       .then(res => {
         res.data.code === 0 ? resolve(res.data.data) : resolve(false)
@@ -190,11 +184,9 @@ export function getComments({
   size
 }) {
   return new Promise((resolve, reject) => {
-    axios.get('/api/comment/list', {
-        params: {
-          page,
-          size
-        }
+    axios.post('/api/comment/list', {
+        page,
+        size
       })
       .then(res => {
         const {
